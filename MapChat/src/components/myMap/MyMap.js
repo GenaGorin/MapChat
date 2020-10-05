@@ -1,19 +1,77 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, Button, TouchableOpacity} from 'react-native';
+import React, { useState, useRef } from 'react';
+import { StyleSheet, View, Image, TouchableOpacity, Animated } from 'react-native';
 import MapView from 'react-native-maps';
 import StartModal from '../StartModal/StartModal';
 import FeedbackModal from '../FeedbackModal/FeedbackModal';
 import CreateMarkerwindow from '../createMarkerWindow/CreateMarkerwindow';
-import { activeImagesSource, clearImagesSourses } from '../imagesArray/imagesArray';
+import { activeImagesSource, clearImagesSourses, advImageSourses } from '../imagesArray/imagesArray';
 import GetLocation from 'react-native-get-location';
 
 export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMarkerLatitude,
-                            lastMarkerLongitude, updateAppMarkers, startModal, hideModal, feedbackModal, chabgeFeedbcakModal }) => {
+    lastMarkerLongitude, updateAppMarkers, startModal, hideModal, feedbackModal, chabgeFeedbcakModal, showUpdateBtn }) => {
+
+    const fadeAnim = useRef(new Animated.Value(-200)).current;
+
+    const showReport = (coords) => {
+        console.log(coords)
+        Animated.timing(fadeAnim, {
+            toValue: 0,
+            duration: 1000,
+            useNativeDriver: false
+        }).start();
+    };
+
+    const hideReport = () => {
+        Animated.timing(fadeAnim, {
+            toValue: -200,
+            duration: 1000,
+            useNativeDriver: false
+        }).start();
+    };
+
 
     const [createMarkerMode, setCreateMarkerMode] = useState({
         createMode: false,
         coords: {},
     });
+
+
+    const [regionData, setRegionData] = useState({
+        latitude: latitude,
+        longitude: longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+    })
+
+    const changeReg = (reg) => {
+        setRegionData({
+            latitude: reg.latitude,
+            longitude: reg.longitude,
+            latitudeDelta: reg.latitudeDelta,
+            longitudeDelta: reg.longitudeDelta,
+        })
+    }
+
+    const zoomIn = () => {
+        let newZoom = {
+            latitude: regionData.latitude,
+            longitude: regionData.longitude,
+            latitudeDelta: regionData.latitudeDelta / 5,
+            longitudeDelta: regionData.longitudeDelta / 5,
+        }
+        myMap.animateToRegion(newZoom)
+    }
+
+    const zoomOut = () => {
+        let newZoom = {
+            latitude: regionData.latitude,
+            longitude: regionData.longitude,
+            latitudeDelta: regionData.latitudeDelta * 5,
+            longitudeDelta: regionData.longitudeDelta * 5,
+        }
+        myMap.animateToRegion(newZoom)
+    }
+
     const startCreateMarkerMode = (e) => {
         setCreateMarkerMode({
             createMode: true,
@@ -35,19 +93,20 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
         });
     }
 
-
-    const [activeImages, setActiveImages] = useState(false);
-    const [passiveImages, setPassiveImages] = useState(false);
-
-    const showActiveImg = () => {
-        setPassiveImages(false);
-        setActiveImages(true);
-    }
-
-    const showPassiveImg = () => {
-        setActiveImages(false);
-        setPassiveImages(true);
-    }
+    /*
+        const [activeImages, setActiveImages] = useState(false);
+        const [passiveImages, setPassiveImages] = useState(false);
+    
+        const showActiveImg = () => {
+            setPassiveImages(false);
+            setActiveImages(true);
+        }
+    
+        const showPassiveImg = () => {
+            setActiveImages(false);
+            setPassiveImages(true);
+        }
+    */
 
     const getMyLocation = () => {
         GetLocation.getCurrentPosition({
@@ -69,21 +128,30 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
     }
 
 
+
     return (
         createMarkerMode.createMode
             ? <CreateMarkerwindow createMarkerAndStopMode={createMarkerAndStopMode} stopMode={stopMode} />
             :
             <View style={styles.container}>
-                <StartModal hideModal= {hideModal}  startModal = {startModal} />
-                <FeedbackModal feedbackModal = {feedbackModal} chabgeFeedbcakModal = {chabgeFeedbcakModal} />
+                <StartModal hideModal={hideModal} startModal={startModal} />
+                <FeedbackModal feedbackModal={feedbackModal} chabgeFeedbcakModal={chabgeFeedbcakModal} />
                 <TouchableOpacity style={styles.goToMyPositionIcon} onPress={() => getMyLocation()}>
-                    <Image source={require('../../images/markers/i.png')} style={{ width: 30, height: 30 }} />
+                    <Image source={require('../../images/controls/1metka.png')} style={{ width: 70, height: 70 }} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.updateIcon} activeOpacity={0.5} onPress={() => updateAppMarkers()}>
-                    <Image source={require('../../images/controls/update.png')} style={{ width: 30, height: 30 }} />
+                {showUpdateBtn
+                    ? <TouchableOpacity style={styles.updateIcon} activeOpacity={0.5} onPress={() => updateAppMarkers()}>
+                        <Image source={require('../../images/controls/metka2.png')} style={{ width: 70, height: 70 }} />
+                    </TouchableOpacity>
+                    : <View></View>}
+                <TouchableOpacity style={styles.zoomIn} activeOpacity={0.5} onPress={() => zoomIn()}>
+                    <Image source={require('../../images/controls/plyus.png')} style={{ width: 70, height: 70 }} />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.zoomOut} activeOpacity={0.5} onPress={() => zoomOut()}>
+                    <Image source={require('../../images/controls/minuss.png')} style={{ width: 70, height: 70 }} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.advitrisment} activeOpacity={0.5} onPress={() => chabgeFeedbcakModal(true)}>
-                    <Image source={require('../../images/controls/advitrisment.png')} style={{ width: 30, height: 30 }} />
+                    <Image source={require('../../images/controls/i.png')} style={{ width: 50, height: 50 }} />
                 </TouchableOpacity>
                 <MapView
                     ref={map => { myMap = map }}
@@ -91,18 +159,32 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
                     onLongPress={(e) => {
                         startCreateMarkerMode(e);
                     }}
+                    
+                    onRegionChangeComplete={(reg) =>
+                        changeReg(reg)
+                        //console.log(reg)
+                    }
+
+                    onMarkerPress={(e) => showReport(e.nativeEvent.coordinate)}
+
                     initialRegion={{
                         latitude: lastMarkerLatitude ? lastMarkerLatitude : latitude,
                         longitude: lastMarkerLongitude ? lastMarkerLongitude : longitude,
-                        latitudeDelta: 0.0922,
-                        longitudeDelta: 0.0421,
+                        latitudeDelta: regionData.latitudeDelta,
+                        longitudeDelta: regionData.longitudeDelta,
                     }}
                     showsUserLocation={true}
                 >
                     {markers.map(marker => {
                         let imageArr = marker.image.split('-');
                         let source;
-                        imageArr[0] == 'active' ? source = activeImagesSource[imageArr[1]] : source = clearImagesSourses[imageArr[1]];
+                        //imageArr[0] == 'active' ? source = activeImagesSource[imageArr[1]] : source = clearImagesSourses[imageArr[1]];
+
+                        if (imageArr[0] == 'active') source = activeImagesSource[imageArr[1]]
+                        if (imageArr[0] == 'clear') source = clearImagesSourses[imageArr[1]]
+                        if (imageArr[0] == 'adv') source = advImageSourses[imageArr[1]]
+
+
                         return <MapView.Marker
                             centerOffset={{ x: -5, y: -15 }}
                             title={marker.title + ' (' + marker.date.substr(11) + ')'}
@@ -116,6 +198,21 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
                         </MapView.Marker>
                     })}
                 </MapView>
+                <Animated.View
+                    style={{
+                        height: 200,
+                        width: '100%',
+                        backgroundColor: 'red',
+                        zIndex: 100,
+                        bottom: fadeAnim,
+                        position: 'absolute'
+                    }}
+                >
+                    <TouchableOpacity activeOpacity={0.5} onPress={() => hideReport()}>
+                        <Image source={require('../../images/controls/close.jpg')} style={{ width: 50, height: 50 }} />
+                    </TouchableOpacity>
+
+                </Animated.View>
             </View>
     );
 }
@@ -137,19 +234,36 @@ const styles = StyleSheet.create({
     updateIcon: {
         position: 'absolute',
         zIndex: 100,
-        left: 40,
-        top: 10
+        left: 210,
+        bottom: 30,
+        opacity: 0.7,
     },
     goToMyPositionIcon: {
         position: 'absolute',
         zIndex: 100,
-        left: 10,
-        top: 10
+        left: 140,
+        bottom: 30,
+        opacity: 0.7,
+    },
+    zoomIn: {
+        position: 'absolute',
+        zIndex: 100,
+        left: 280,
+        bottom: 30,
+        opacity: 0.7,
+    },
+    zoomOut: {
+        position: 'absolute',
+        zIndex: 100,
+        left: 70,
+        bottom: 30,
+        opacity: 0.7,
     },
     advitrisment: {
         position: 'absolute',
         zIndex: 100,
-        left: 70,
-        top: 10
+        right: 30,
+        top: 30,
+        opacity: 0.7,
     }
 });

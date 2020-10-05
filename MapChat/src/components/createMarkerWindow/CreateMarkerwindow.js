@@ -58,13 +58,13 @@ export default CreateMarkerwindow = ({ createMarkerAndStopMode, stopMode }) => {
 
     return (
         <View style={styles.windowWrapper}>
-            <Text style={styles.header} >Создание метки</Text>
+            <Text style={styles.header} >СОЗДАЙТЕ МЕТКУ</Text>
             <View style={styles.buttonWrapper}>
                 <TouchableOpacity onPress={showActiveImg} >
-                    <Image source={require('../../images/controls/aktiv.png')} style={{ width: 100, height: 40 }} />
+                    <Image source={require('../../images/controls/aktiv.png')} style={{ width: 200, height: 90 }} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={showPassiveImg} >
-                    <Image source={require('../../images/controls/chisto.png')} style={{ width: 100, height: 40 }} />
+                    <Image source={require('../../images/controls/chisto.png')} style={{ width: 200, height: 90 }} />
                 </TouchableOpacity>
             </View>
             {activeImages
@@ -103,12 +103,12 @@ export default CreateMarkerwindow = ({ createMarkerAndStopMode, stopMode }) => {
             { (passiveImages || activeImages)
                 &&
                 <TouchableOpacity onPress={createMarker} style ={{top: 110}} >
-                    <Image source={require('../../images/controls/createMarker.png')} style={{ width: 100, height: 40 }} />
+                    <Image source={require('../../images/controls/createMarker.png')} style={{ width: 400, height: 90 }} />
                 </TouchableOpacity>
             }
-            <View style={{ top: 450, position: 'absolute', }}>
+            <View style={{ top: 528, position: 'absolute', }}>
                 <TouchableOpacity onPress={stopMode} >
-                    <Image source={require('../../images/controls/otmena.png')} style={{ width: 100, height: 40 }} />
+                    <Image source={require('../../images/controls/otmena.png')} style={{ width: 400, height: 90 }} />
                 </TouchableOpacity>
             </View>
         </View>)
@@ -133,11 +133,12 @@ const styles = StyleSheet.create({
     header: {
         fontSize: 25,
         top: 30,
+        color: '#777777'
     },
     buttonWrapper: {
-        top: 50,
+        top: 70,
         flexDirection: 'row',
-        width: '100%',
+        //width: '100%',
         paddingHorizontal: 15,
         justifyContent: 'space-around',
     }

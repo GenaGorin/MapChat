@@ -12,6 +12,7 @@ export default class App extends React.Component {
     startModal: true,
     banReason: null,
     feedbackModal: false,
+    showUpdateBtn: true,
     currentPosition: {
       latitude: null,
       longitude: null,
@@ -67,9 +68,13 @@ export default class App extends React.Component {
 
   updateAppMarkers() {
     var self = this;
+    self.setState({
+      showUpdateBtn: false
+    });
     policeGramm.getMarkers(this.state.currentPosition)
       .then(function (response) {
         self.setState({
+          showUpdateBtn: true,
           markers: response.data,
         });
       })
@@ -168,6 +173,7 @@ export default class App extends React.Component {
           hideModal = {this.hideModal.bind(this)}
           feedbackModal = {this.state.feedbackModal}
           chabgeFeedbcakModal = {this.chabgeFeedbcakModal.bind(this)}
+          showUpdateBtn = {this.state.showUpdateBtn}
         />
     );
   }

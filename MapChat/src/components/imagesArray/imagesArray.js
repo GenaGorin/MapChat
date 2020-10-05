@@ -13,3 +13,8 @@ export const clearImagesSourses = [
     require('../../images/markers/clear3.png'),
     require('../../images/markers/clear4.png'),
 ];
+
+export const advImageSourses = [
+    require('../../images/markers/sale.jpg'),
+    require('../../images/markers/sale1.jpg'),
+]
