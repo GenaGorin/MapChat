@@ -4,8 +4,9 @@ import MapView from 'react-native-maps';
 import StartModal from '../StartModal/StartModal';
 import FeedbackModal from '../FeedbackModal/FeedbackModal';
 import CreateMarkerwindow from '../createMarkerWindow/CreateMarkerwindow';
-import { activeImagesSource, clearImagesSourses, advImageSourses } from '../imagesArray/imagesArray';
+import { activeImagesSource, clearImagesSourses, advImageSourses, messageImageSourses } from '../imagesArray/imagesArray';
 import GetLocation from 'react-native-get-location';
+import {ReportForm} from './reportForm/ReportForm';
 
 export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMarkerLatitude,
     lastMarkerLongitude, updateAppMarkers, startModal, hideModal, feedbackModal, chabgeFeedbcakModal, showUpdateBtn }) => {
@@ -13,10 +14,9 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
     const fadeAnim = useRef(new Animated.Value(-200)).current;
 
     const showReport = (coords) => {
-        console.log(coords)
         Animated.timing(fadeAnim, {
             toValue: 0,
-            duration: 1000,
+            duration: 300,
             useNativeDriver: false
         }).start();
     };
@@ -24,7 +24,7 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
     const hideReport = () => {
         Animated.timing(fadeAnim, {
             toValue: -200,
-            duration: 1000,
+            duration: 300,
             useNativeDriver: false
         }).start();
     };
@@ -136,22 +136,28 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
             <View style={styles.container}>
                 <StartModal hideModal={hideModal} startModal={startModal} />
                 <FeedbackModal feedbackModal={feedbackModal} chabgeFeedbcakModal={chabgeFeedbcakModal} />
-                <TouchableOpacity style={styles.goToMyPositionIcon} onPress={() => getMyLocation()}>
-                    <Image source={require('../../images/controls/1metka.png')} style={{ width: 70, height: 70 }} />
-                </TouchableOpacity>
-                {showUpdateBtn
-                    ? <TouchableOpacity style={styles.updateIcon} activeOpacity={0.5} onPress={() => updateAppMarkers()}>
-                        <Image source={require('../../images/controls/metka2.png')} style={{ width: 70, height: 70 }} />
+
+                <View style={{ display: 'flex', flexDirection: 'column', right: 10, position: 'absolute' }}>
+                    <TouchableOpacity style={styles.zoomInNew} activeOpacity={0.5} onPress={() => zoomIn()}>
+                        <Image source={require('../../images/controls/plusnew.png')} style={{ width: 30, height: 30, paddingTop: 10, paddingLeft: 10 }} />
                     </TouchableOpacity>
-                    : <View></View>}
-                <TouchableOpacity style={styles.zoomIn} activeOpacity={0.5} onPress={() => zoomIn()}>
-                    <Image source={require('../../images/controls/plyus.png')} style={{ width: 70, height: 70 }} />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.zoomOut} activeOpacity={0.5} onPress={() => zoomOut()}>
-                    <Image source={require('../../images/controls/minuss.png')} style={{ width: 70, height: 70 }} />
-                </TouchableOpacity>
+                    <TouchableOpacity style={styles.zoomOutNew} activeOpacity={0.5} onPress={() => zoomOut()}>
+                        <Image source={require('../../images/controls/minusnew.png')} style={{ width: 30, height: 30, paddingTop: 10, paddingLeft: 10 }} />
+                    </TouchableOpacity>
+                </View>
+                <View style={{ display: 'flex', flexDirection: 'column', right: 10, position: 'absolute', bottom: 30 }}>
+                    <TouchableOpacity style={styles.updateNew} activeOpacity={0.5} onPress={() => getMyLocation()}>
+                        <Image source={require('../../images/controls/findme2.png')} style={{ width: 30, height: 30, paddingTop: 10, paddingLeft: 10 }} />
+                    </TouchableOpacity>
+                    {showUpdateBtn
+                        ? <TouchableOpacity style={styles.updateNew} activeOpacity={0.5} onPress={() => updateAppMarkers()}>
+                            <Image source={require('../../images/controls/update.png')} style={{ width: 20, height: 20, paddingTop: 10, paddingLeft: 10 }} />
+                        </TouchableOpacity>
+                        : <View></View>}
+                </View>
+
                 <TouchableOpacity style={styles.advitrisment} activeOpacity={0.5} onPress={() => chabgeFeedbcakModal(true)}>
-                    <Image source={require('../../images/controls/i.png')} style={{ width: 50, height: 50 }} />
+                    <Image source={require('../../images/controls/info.png')} style={{ width: 30, height: 30 }} />
                 </TouchableOpacity>
                 <MapView
                     ref={map => { myMap = map }}
@@ -159,7 +165,7 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
                     onLongPress={(e) => {
                         startCreateMarkerMode(e);
                     }}
-                    
+
                     onRegionChangeComplete={(reg) =>
                         changeReg(reg)
                         //console.log(reg)
@@ -183,6 +189,7 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
                         if (imageArr[0] == 'active') source = activeImagesSource[imageArr[1]]
                         if (imageArr[0] == 'clear') source = clearImagesSourses[imageArr[1]]
                         if (imageArr[0] == 'adv') source = advImageSourses[imageArr[1]]
+                        if (imageArr[0] == 'message') source = messageImageSourses[imageArr[1]]
 
 
                         return <MapView.Marker
@@ -194,7 +201,7 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
                                 latitude: parseFloat(marker.latitude),
                                 longitude: parseFloat(marker.longitude),
                             }}>
-                            <Image source={source} style={{ width: 39, height: 64 }} />
+                            <Image source={source} style={{ width: 30, height: 48 }} />
                         </MapView.Marker>
                     })}
                 </MapView>
@@ -202,15 +209,16 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
                     style={{
                         height: 200,
                         width: '100%',
-                        backgroundColor: 'red',
+                        backgroundColor: 'white',
                         zIndex: 100,
                         bottom: fadeAnim,
                         position: 'absolute'
                     }}
                 >
-                    <TouchableOpacity activeOpacity={0.5} onPress={() => hideReport()}>
-                        <Image source={require('../../images/controls/close.jpg')} style={{ width: 50, height: 50 }} />
+                    <TouchableOpacity style={{ position: 'absolute', right: 5, top: 5 }} activeOpacity={0.5} onPress={() => hideReport()}>
+                        <Image source={require('../../images/controls/close.png')} style={{ width: 30, height: 30 }} />
                     </TouchableOpacity>
+                    <ReportForm />
 
                 </Animated.View>
             </View>
@@ -245,25 +253,47 @@ const styles = StyleSheet.create({
         bottom: 30,
         opacity: 0.7,
     },
-    zoomIn: {
-        position: 'absolute',
-        zIndex: 100,
-        left: 280,
-        bottom: 30,
-        opacity: 0.7,
-    },
-    zoomOut: {
-        position: 'absolute',
-        zIndex: 100,
-        left: 70,
-        bottom: 30,
-        opacity: 0.7,
-    },
     advitrisment: {
         position: 'absolute',
-        zIndex: 100,
-        right: 30,
+        right: 10,
         top: 30,
-        opacity: 0.7,
+        width: 40, height: 40,
+        backgroundColor: '#FFFFFF',
+        opacity: 0.8,
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 100,
+        marginBottom: 10,
+    },
+    zoomInNew: {
+        width: 40, height: 50,
+        backgroundColor: '#FFFFFF',
+        opacity: 0.8,
+        borderTopStartRadius: 10,
+        borderTopRightRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 100
+    },
+    zoomOutNew: {
+        width: 40, height: 50,
+        backgroundColor: '#FFFFFF',
+        opacity: 0.8,
+        borderBottomEndRadius: 10,
+        borderBottomLeftRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 100,
+    },
+    updateNew: {
+        width: 40, height: 40,
+        backgroundColor: '#FFFFFF',
+        opacity: 0.8,
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 100,
+        marginBottom: 10,
     }
 });

@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, Button, TouchableOpacity, Modal } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, TouchableOpacity, Modal, Linking } from 'react-native';
 
 export default StartModal = ({ feedbackModal, chabgeFeedbcakModal }) => {
+
+    const goInstagramm = () => {
+        const url = 'https://www.instagram.com/qetdubxhshskdkshsvjs/';
+        Linking.openURL(url).catch(err => console.error('An error occurred', err));
+    }
 
     return (
         <Modal visible={feedbackModal}>
@@ -10,20 +15,26 @@ export default StartModal = ({ feedbackModal, chabgeFeedbcakModal }) => {
                     <Text style={styles.police}>Meet us</Text>
                 </View>
                 <Image source={require('../../images/controls/meetus.png')} style={{ width: 150, height: 70, marginBottom: 30 }} />
-                <View style ={{marginBottom: 30,}}>
+                <View style={{ marginBottom: 30, }}>
                     <Text >Наши контакты для сотрудничества и обратной связи</Text>
                 </View>
-                <View style = {styles.contacts}>
+                <View style={styles.contacts}>
                     <Image source={require('../../images/controls/mail.png')} style={{ width: 50, height: 50 }} />
-                    <Text style = {styles.contact}>m.baukov@mail.ru</Text>
+                    <Text style={styles.contact}>m.baukov@mail.ru</Text>
                 </View>
-                <View style = {styles.contacts}>
+                <View style={styles.contacts}>
                     <Image source={require('../../images/controls/telegramm.png')} style={{ width: 50, height: 50 }} />
-                    <Text style = {styles.contact} >79872281488</Text>
+                    <Text style={styles.contact} >79872281488</Text>
                 </View>
-                <View style = {styles.contacts}>
+                <View style={styles.contacts}>
                     <Image source={require('../../images/controls/instagramm.jpg')} style={{ width: 50, height: 50 }} />
-                    <Text style = {styles.contact} >_big_dick_99</Text>
+                    <Text style={styles.contact} >_big_dick_99</Text>
+                    <Button
+                        onPress={goInstagramm}
+                        title="Go inst"
+                        color="#841584"
+                        accessibilityLabel="Learn more about this purple button"
+                    />
                 </View>
                 <TouchableOpacity style={styles.goToMyPositionIcon} onPress={() => chabgeFeedbcakModal(false)} >
                     <Image source={require('../../images/controls/under.png')} style={{ width: 100, height: 50 }} />
