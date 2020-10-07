@@ -31,6 +31,9 @@ export const policeGramm = {
         data.append('image', marker.image);
         return policeGrammApi.post('createMarker.php', data);
     },
+    getContacts() {
+        return policeGrammApi.get('getContacts.php');
+    }
     /*
     login(loginData) {
         return samuraiApi.post('/auth/login', loginData);

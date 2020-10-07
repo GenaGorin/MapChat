@@ -9,7 +9,7 @@ import GetLocation from 'react-native-get-location';
 import {ReportForm} from './reportForm/ReportForm';
 
 export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMarkerLatitude,
-    lastMarkerLongitude, updateAppMarkers, startModal, hideModal, feedbackModal, chabgeFeedbcakModal, showUpdateBtn }) => {
+    lastMarkerLongitude, updateAppMarkers, startModal, hideModal, feedbackModal, chabgeFeedbcakModal, showUpdateBtn, feedbackData }) => {
 
     const fadeAnim = useRef(new Animated.Value(-200)).current;
 
@@ -135,7 +135,7 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
             :
             <View style={styles.container}>
                 <StartModal hideModal={hideModal} startModal={startModal} />
-                <FeedbackModal feedbackModal={feedbackModal} chabgeFeedbcakModal={chabgeFeedbcakModal} />
+                <FeedbackModal feedbackModal={feedbackModal} chabgeFeedbcakModal={chabgeFeedbcakModal} feedbackData={feedbackData} />
 
                 <View style={{ display: 'flex', flexDirection: 'column', right: 10, position: 'absolute' }}>
                     <TouchableOpacity style={styles.zoomInNew} activeOpacity={0.5} onPress={() => zoomIn()}>

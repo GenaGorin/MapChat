@@ -8,7 +8,7 @@ export default StartModal = ({startModal, hideModal}) => {
             <View style={styles.header}>
                 <Text style={styles.welcomeText}>Добро пожаловать в</Text>
                 <View style={styles.policegrammWrapper}>
-                    <Text style={styles.police}>Map</Text>
+                    <Text style={styles.police}>Drive</Text>
                     <Text style={styles.police}>Chat</Text>
                 </View>
                 <Image source={require('../../images/controls/instructions.png')} style={{ width: 270, height: 230, marginBottom: 90 }} />

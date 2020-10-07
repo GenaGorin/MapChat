@@ -21,11 +21,12 @@ export default class App extends React.Component {
       latitude: null,
       longitude: null,
     },
+    feebackData: [],
     markers: [],
   }
   i = 4;
 
-  hideModal(){
+  hideModal() {
     this.setState({
       startModal: false,
     });
@@ -35,6 +36,20 @@ export default class App extends React.Component {
     this.setState({
       feedbackModal: bool,
     });
+
+    if (this.state.feebackData.length == 0) {
+      let self = this;
+      policeGramm.getContacts(this.state.currentPosition)
+        .then(function (response) {
+          self.setState({
+            feebackData: response.data
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+
   }
 
   loadApp(position) {
@@ -168,12 +183,13 @@ export default class App extends React.Component {
           onRegionChange={this.state.onRegionChange}
           markers={this.state.markers}
           createNewMarker={this.createNewMarker}
-          updateAppMarkers = {this.updateAppMarkers.bind(this)}
-          startModal = {this.state.startModal}
-          hideModal = {this.hideModal.bind(this)}
-          feedbackModal = {this.state.feedbackModal}
-          chabgeFeedbcakModal = {this.chabgeFeedbcakModal.bind(this)}
-          showUpdateBtn = {this.state.showUpdateBtn}
+          updateAppMarkers={this.updateAppMarkers.bind(this)}
+          startModal={this.state.startModal}
+          hideModal={this.hideModal.bind(this)}
+          feedbackModal={this.state.feedbackModal}
+          chabgeFeedbcakModal={this.chabgeFeedbcakModal.bind(this)}
+          feedbackData={this.state.feebackData}
+          showUpdateBtn={this.state.showUpdateBtn}
         />
     );
   }
