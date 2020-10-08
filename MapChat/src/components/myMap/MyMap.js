@@ -9,17 +9,21 @@ import GetLocation from 'react-native-get-location';
 import {ReportForm} from './reportForm/ReportForm';
 
 export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMarkerLatitude,
-    lastMarkerLongitude, updateAppMarkers, startModal, hideModal, feedbackModal, chabgeFeedbcakModal, showUpdateBtn, feedbackData }) => {
+    lastMarkerLongitude, updateAppMarkers, startModal, hideModal, feedbackModal, chabgeFeedbcakModal, showUpdateBtn, feedbackData, sendReport }) => {
 
     const fadeAnim = useRef(new Animated.Value(-200)).current;
 
+
     const showReport = (coords) => {
+        setFocusedMarkerToReport(coords);
         Animated.timing(fadeAnim, {
             toValue: 0,
             duration: 300,
             useNativeDriver: false
         }).start();
     };
+
+    const [focusedMarkerToReport, setFocusedMarkerToReport] = useState('');
 
     const hideReport = () => {
         Animated.timing(fadeAnim, {
@@ -218,7 +222,7 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
                     <TouchableOpacity style={{ position: 'absolute', right: 5, top: 5 }} activeOpacity={0.5} onPress={() => hideReport()}>
                         <Image source={require('../../images/controls/close.png')} style={{ width: 30, height: 30 }} />
                     </TouchableOpacity>
-                    <ReportForm />
+                    <ReportForm focusedMarkerToReport = {focusedMarkerToReport} sendReport ={sendReport} hideReport = {hideReport} />
 
                 </Animated.View>
             </View>

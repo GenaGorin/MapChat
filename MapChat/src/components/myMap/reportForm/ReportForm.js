@@ -1,12 +1,22 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, Button, TouchableOpacity, Modal, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, TouchableOpacity, Modal, TextInput, Alert } from 'react-native';
 
-export const ReportForm = ({ sendReport }) => {
+export const ReportForm = ({ sendReport, focusedMarkerToReport, hideReport }) => {
 
     const [reportDescription, setReportDescription] = useState('');
 
     const createReport = () => {
-        console.log('send - '+ reportDescription)
+        if (reportDescription == '') {
+            Alert.alert('Укажите описание')
+        } else {
+            let reportData = {
+                latitude: focusedMarkerToReport.latitude.toFixed(4),
+                longitude: focusedMarkerToReport.longitude.toFixed(4),
+                description: reportDescription,
+            }
+            sendReport(reportData);
+            hideReport();
+        }
     }
 
     return (

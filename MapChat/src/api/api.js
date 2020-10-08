@@ -33,6 +33,13 @@ export const policeGramm = {
     },
     getContacts() {
         return policeGrammApi.get('getContacts.php');
+    },
+    createReport(reportData) {
+        let data = new FormData();
+        data.append('latitude', reportData.latitude);
+        data.append('longitude', reportData.longitude);
+        data.append('description', reportData.description);
+        return policeGrammApi.post('createReport.php', data);
     }
     /*
     login(loginData) {

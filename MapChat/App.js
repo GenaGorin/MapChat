@@ -26,6 +26,21 @@ export default class App extends React.Component {
   }
   i = 4;
 
+  sendReport(reportData) {
+    //Alert.alert('Разрешено создавать не более 5 меток в сутки');
+    policeGramm.createReport(reportData)
+      .then(function (response) {
+        if (response.data === 'success') {
+          Alert.alert('Ваша жалоба будет рассмотрена')
+        } else {
+          Alert.alert('Вы уже жаловались на эту метку')
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   hideModal() {
     this.setState({
       startModal: false,
@@ -190,6 +205,7 @@ export default class App extends React.Component {
           chabgeFeedbcakModal={this.chabgeFeedbcakModal.bind(this)}
           feedbackData={this.state.feebackData}
           showUpdateBtn={this.state.showUpdateBtn}
+          sendReport = {this.sendReport.bind(this)}
         />
     );
   }

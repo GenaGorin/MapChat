@@ -25,11 +25,6 @@ export default StartModal = ({ feedbackModal, chabgeFeedbcakModal, feedbackData 
 
 
 
-    console.log(feedbackData);
-    /*
-    <Image source={require('../../images/controls/mail.png')} style={{ width: 50, height: 50 }} />
-    */
-
 
     return (
         <Modal visible={feedbackModal}>
