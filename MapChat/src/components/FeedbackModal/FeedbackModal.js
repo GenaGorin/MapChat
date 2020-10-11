@@ -53,7 +53,7 @@ export default StartModal = ({ feedbackModal, chabgeFeedbcakModal, feedbackData 
                                 <Text style={styles.buttonText}>TELEGRAMM</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={goDrivechat} style={[styles.buttons, { backgroundColor: '#FF4E4E' }]}>
+                        <TouchableOpacity onPress={goDrivechat} style={[styles.buttons, { backgroundColor: '#FDD138' }]}>
                             <View style={{ flexDirection: 'row' }}>
                                 <Image source={require('../../images/controls/site.png')} style={{ width: 40, height: 40, marginLeft: 5 }} />
                                 <Text style={styles.buttonText}>DRIVECHAT</Text>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, Button, TouchableOpacity, Modal, TextInput, Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Modal, TextInput, Alert } from 'react-native';
 
 export const ReportForm = ({ sendReport, focusedMarkerToReport, hideReport }) => {
 

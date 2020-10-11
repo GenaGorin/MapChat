@@ -8,7 +8,10 @@ export default class App extends React.Component {
 
   state = {
     isLoaded: false,
-    isBanned: false,
+    banInfo: {
+      banStatus: false,
+      banReason: null,
+    },
     startModal: true,
     banReason: null,
     feedbackModal: false,
@@ -26,8 +29,16 @@ export default class App extends React.Component {
   }
   i = 4;
 
+  findMarkerId = (lat, lng) => {
+    let res = this.state.markers.filter((marker)=> marker.latitude == lat && marker.longitude == lng);
+    return res[0].id;
+  }
+
   sendReport(reportData) {
+    let markerId = this.findMarkerId(reportData.latitude, reportData.longitude);
+    console.log(markerId);
     //Alert.alert('Разрешено создавать не более 5 меток в сутки');
+    /*
     policeGramm.createReport(reportData)
       .then(function (response) {
         if (response.data === 'success') {
@@ -39,7 +50,8 @@ export default class App extends React.Component {
       .catch(function (error) {
         console.log(error);
       });
-  }
+      */
+    }
 
   hideModal() {
     this.setState({
@@ -79,16 +91,13 @@ export default class App extends React.Component {
     var self = this;
     policeGramm.getMarkers(this.state.currentPosition)
       .then(function (response) {
-        if (response.data.banned) {
-          self.setState({
-            isBanned: true,
-            banReason: response.data.banned,
-          });
-        } else {
-          self.setState({
-            markers: response.data,
-          });
-        }
+        self.setState({
+          markers: response.data.markerData,
+          banInfo: {
+            banStatus: response.data.banInfo.status,
+            banReason:  response.data.banInfo.reason,
+          }
+        });
       })
       .catch(function (error) {
         console.log(error);
@@ -105,7 +114,7 @@ export default class App extends React.Component {
       .then(function (response) {
         self.setState({
           showUpdateBtn: true,
-          markers: response.data,
+          markers: response.data.markerData,
         });
       })
       .catch(function (error) {
@@ -173,17 +182,6 @@ export default class App extends React.Component {
   }
 
   render() {
-    if (this.state.isBanned) {
-      return (
-        <View style={styles.banWindow}>
-          <Text style={styles.banWindowhead}>Вы были забаsнены :(</Text>
-          <Text style={styles.banWindowdesc}>Причина - {this.state.banReason}</Text>
-          <Text>Для разблокировки вы можете обратится к разработчику</Text>
-          <Text>Telegramm</Text>
-          <Text>Instagramm</Text>
-        </View>
-      )
-    }
 
     return (
       !this.state.isLoaded
@@ -206,6 +204,7 @@ export default class App extends React.Component {
           feedbackData={this.state.feebackData}
           showUpdateBtn={this.state.showUpdateBtn}
           sendReport = {this.sendReport.bind(this)}
+          banInfo = {this.state.banInfo}
         />
     );
   }

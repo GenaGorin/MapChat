@@ -6,13 +6,13 @@ import FeedbackModal from '../FeedbackModal/FeedbackModal';
 import CreateMarkerwindow from '../createMarkerWindow/CreateMarkerwindow';
 import { activeImagesSource, clearImagesSourses, advImageSourses, messageImageSourses } from '../imagesArray/imagesArray';
 import GetLocation from 'react-native-get-location';
-import {ReportForm} from './reportForm/ReportForm';
+import { ReportForm } from './reportForm/ReportForm';
 
 export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMarkerLatitude,
-    lastMarkerLongitude, updateAppMarkers, startModal, hideModal, feedbackModal, chabgeFeedbcakModal, showUpdateBtn, feedbackData, sendReport }) => {
+    lastMarkerLongitude, updateAppMarkers, startModal, hideModal, feedbackModal, chabgeFeedbcakModal,
+    showUpdateBtn, feedbackData, sendReport, banInfo }) => {
 
     const fadeAnim = useRef(new Animated.Value(-200)).current;
-
 
     const showReport = (coords) => {
         setFocusedMarkerToReport(coords);
@@ -135,7 +135,7 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
 
     return (
         createMarkerMode.createMode
-            ? <CreateMarkerwindow createMarkerAndStopMode={createMarkerAndStopMode} stopMode={stopMode} />
+            ? <CreateMarkerwindow chabgeFeedbcakModal = {chabgeFeedbcakModal} feedbackData={feedbackData} banInfo={banInfo} createMarkerAndStopMode={createMarkerAndStopMode} stopMode={stopMode} />
             :
             <View style={styles.container}>
                 <StartModal hideModal={hideModal} startModal={startModal} />
@@ -209,22 +209,24 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
                         </MapView.Marker>
                     })}
                 </MapView>
-                <Animated.View
-                    style={{
-                        height: 200,
-                        width: '100%',
-                        backgroundColor: 'white',
-                        zIndex: 100,
-                        bottom: fadeAnim,
-                        position: 'absolute'
-                    }}
-                >
-                    <TouchableOpacity style={{ position: 'absolute', right: 5, top: 5 }} activeOpacity={0.5} onPress={() => hideReport()}>
-                        <Image source={require('../../images/controls/close.png')} style={{ width: 30, height: 30 }} />
-                    </TouchableOpacity>
-                    <ReportForm focusedMarkerToReport = {focusedMarkerToReport} sendReport ={sendReport} hideReport = {hideReport} />
+                {!banInfo.banStatus &&
+                    <Animated.View
+                        style={{
+                            height: 200,
+                            width: '100%',
+                            backgroundColor: 'white',
+                            zIndex: 100,
+                            bottom: fadeAnim,
+                            position: 'absolute'
+                        }}
+                    >
+                        <TouchableOpacity style={{ position: 'absolute', right: 5, top: 5 }} activeOpacity={0.5} onPress={() => hideReport()}>
+                            <Image source={require('../../images/controls/close.png')} style={{ width: 30, height: 30 }} />
+                        </TouchableOpacity>
+                        <ReportForm focusedMarkerToReport={focusedMarkerToReport} sendReport={sendReport} hideReport={hideReport} />
 
-                </Animated.View>
+                    </Animated.View>
+                }
             </View>
     );
 }

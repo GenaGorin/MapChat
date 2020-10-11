@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react';
-import { StyleSheet, Text, View, Image, Button, TouchableOpacity, TextInput, Alert, Animated } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, TouchableOpacity, TextInput, Alert, Animated, ActivityIndicator } from 'react-native';
 import ImageMarker from './ImageMarker/ImageMarker';
 import { activeImagesSource, clearImagesSourses, messageImageSourses } from '../imagesArray/imagesArray';
 
-export default CreateMarkerwindow = ({ createMarkerAndStopMode, stopMode }) => {
+export default CreateMarkerwindow = ({ chabgeFeedbcakModal, createMarkerAndStopMode, stopMode, banInfo }) => {
+
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [activeImages, setActiveImages] = useState(false);
@@ -74,6 +75,11 @@ export default CreateMarkerwindow = ({ createMarkerAndStopMode, stopMode }) => {
         }
     }
 
+    const goContacts = () => {
+        stopMode()
+        chabgeFeedbcakModal(true)
+    }
+
     const createMarker = () => {
         let title;
         let image;
@@ -98,6 +104,28 @@ export default CreateMarkerwindow = ({ createMarkerAndStopMode, stopMode }) => {
             date: '2288-22-33 ' + date.getHours() + ':' + date.getMinutes(),
         }
         createMarkerAndStopMode(data);
+    }
+
+    if (banInfo.banStatus) {
+        return (
+            <View style={styles.header}>
+                <View style={styles.policegrammWrapper}>
+                    <Text style={styles.police}>Вы были забанены</Text>
+                </View>
+                <View style={{ marginBottom: 30, marginTop: 100, }}>
+                    <Text >Причина - {banInfo.banReason}</Text>
+                    <Text>Для разблокировки перейдите в контакты</Text>
+                    <Text>и напишите нам</Text>
+                </View>
+                <TouchableOpacity activeOpacity={0.5} onPress ={goContacts} style = {[styles.buttons, {backgroundColor: '#50ACFF'}]}>
+                    <Text style={{fontSize: 18, color: '#FFFFFF', marginTop: 3, marginLeft: 35}}>В КОНТАКТЫ</Text>
+                </TouchableOpacity>
+                
+                <TouchableOpacity style={{ position: 'absolute', right: 5, top: 5 }} activeOpacity={0.5} onPress={stopMode}>
+                    <Image source={require('../../images/controls/close.png')} style={{ width: 30, height: 30 }} />
+                </TouchableOpacity>
+            </View>
+        )
     }
 
     return (
@@ -232,5 +260,20 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         marginTop: 10,
         marginLeft: 15,
-    }
+    },
+    header: {
+        alignItems: 'center',
+        marginBottom: 200,
+    },
+    police: {
+        color: 'black',
+        fontSize: 26,
+        fontWeight: 'bold',
+    },
+    policegrammWrapper: {
+        display: 'flex',
+        flexDirection: 'row',
+        marginBottom: 30,
+        marginTop: 50,
+    },
 });
