@@ -34,12 +34,16 @@ export const policeGramm = {
     getContacts() {
         return policeGrammApi.get('getContacts.php');
     },
-    createReport(reportData) {
+    createReport(markerId, description) {
         let data = new FormData();
-        data.append('latitude', reportData.latitude);
-        data.append('longitude', reportData.longitude);
-        data.append('description', reportData.description);
+        data.append('markerId', markerId);
+        data.append('description', description);
         return policeGrammApi.post('createReport.php', data);
+    },
+    confirmMarker(markerId) {
+        let data = new FormData();
+        data.append('markerId', markerId);
+        return policeGrammApi.post('confirmMarker.php', data);
     }
     /*
     login(loginData) {

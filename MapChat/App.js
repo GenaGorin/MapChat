@@ -36,10 +36,8 @@ export default class App extends React.Component {
 
   sendReport(reportData) {
     let markerId = this.findMarkerId(reportData.latitude, reportData.longitude);
-    console.log(markerId);
-    //Alert.alert('Разрешено создавать не более 5 меток в сутки');
-    /*
-    policeGramm.createReport(reportData)
+    let description = reportData.description;
+    policeGramm.createReport(markerId, description)
       .then(function (response) {
         if (response.data === 'success') {
           Alert.alert('Ваша жалоба будет рассмотрена')
@@ -50,7 +48,37 @@ export default class App extends React.Component {
       .catch(function (error) {
         console.log(error);
       });
-      */
+    }
+
+    incrementConfirms(markerId) {
+      let newMarkers = this.state.markers.map(marker => {
+        if (marker.id === markerId) {
+          marker.confirms++;
+          return marker;
+        }else {
+          return marker;
+        }
+      });
+      this.setState({
+        markers: newMarkers
+      })
+    }
+
+    sendMarkerConfirm(confirmData) {
+      let markerId = this.findMarkerId(confirmData.latitude, confirmData.longitude);
+      let self = this;
+      policeGramm.confirmMarker(markerId)
+      .then(function (response) {
+        if (response.data === 'Success') {
+          self.incrementConfirms(markerId);
+        } else {
+          Alert.alert('Вы уже подтверждали эту метку')
+          //console.log(response.data)
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     }
 
   hideModal() {
@@ -205,6 +233,7 @@ export default class App extends React.Component {
           showUpdateBtn={this.state.showUpdateBtn}
           sendReport = {this.sendReport.bind(this)}
           banInfo = {this.state.banInfo}
+          sendMarkerConfirm = {this.sendMarkerConfirm.bind(this)}
         />
     );
   }

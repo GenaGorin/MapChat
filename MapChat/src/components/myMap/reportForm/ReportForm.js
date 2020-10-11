@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Modal, TextInput, Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Modal, TextInput, Alert, Image } from 'react-native';
 
-export const ReportForm = ({ sendReport, focusedMarkerToReport, hideReport }) => {
+export const ReportForm = ({ sendReport, focusedMarkerToReport, hideReport, sendMarkerConfirm }) => {
 
     const [reportDescription, setReportDescription] = useState('');
 
@@ -19,20 +19,38 @@ export const ReportForm = ({ sendReport, focusedMarkerToReport, hideReport }) =>
         }
     }
 
+    const confirmMarker = () => {
+        let confirmData = {
+            latitude: focusedMarkerToReport.latitude.toFixed(4),
+            longitude: focusedMarkerToReport.longitude.toFixed(4),
+        }
+        sendMarkerConfirm(confirmData);
+        hideReport();
+    }
+
     return (
         <View>
             <View style={{ marginLeft: 10, marginTop: 10, marginRight: 30 }}>
-                <Text style={styles.header}>Пожаловаться на метку</Text>
+                <Text style={styles.header}>Пожалуйтесь либо подтвердите метку</Text>
                 <TextInput
                     style={styles.input}
                     onChangeText={text => setReportDescription(text)}
                     value={reportDescription}
                     placeholder='Опишите жалобу'
                 />
-                <View style={{ alignItems: 'center' }}>
-                    <TouchableOpacity style={styles.reportButton} activeOpacity={0.5} onPress={() => createReport()}>
-                        <Text>ОТПРАВИТЬ</Text>
-                    </TouchableOpacity>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                    <View style={{ alignItems: 'center' }}>
+                        <TouchableOpacity style={[styles.reportButton, { backgroundColor: '#92EF85' }]} activeOpacity={0.5} onPress={() => confirmMarker()}>
+                            <Image source={require('../../../images/controls/accept.png')} style={{ width: 20, height: 20, marginRight: 10 }} />
+                            <Text>ПОДТВЕРДИТЬ</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ alignItems: 'center' }}>
+                        <TouchableOpacity style={[styles.reportButton, { backgroundColor: '#F67878' }]} activeOpacity={0.5} onPress={() => createReport()}>
+                            <Image source={require('../../../images/controls/warning.png')} style={{ width: 20, height: 20, marginRight: 10 }} />
+                            <Text>ПОЖАЛОВАТЬСЯ</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         </View>
@@ -41,7 +59,7 @@ export const ReportForm = ({ sendReport, focusedMarkerToReport, hideReport }) =>
 
 const styles = StyleSheet.create({
     header: {
-        fontSize: 21,
+        fontSize: 16,
         color: '#777777',
     },
     input: {
@@ -53,12 +71,13 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     reportButton: {
-        width: 120,
-        height: 50,
-        backgroundColor: '#d5d8d9',
+        width: 160,
+        height: 45,
+        //backgroundColor: '#d5d8d9',
         borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 10
+        marginTop: 10,
+        flexDirection: 'row'
     }
 });

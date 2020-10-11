@@ -10,7 +10,7 @@ import { ReportForm } from './reportForm/ReportForm';
 
 export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMarkerLatitude,
     lastMarkerLongitude, updateAppMarkers, startModal, hideModal, feedbackModal, chabgeFeedbcakModal,
-    showUpdateBtn, feedbackData, sendReport, banInfo }) => {
+    showUpdateBtn, feedbackData, sendReport, banInfo, sendMarkerConfirm }) => {
 
     const fadeAnim = useRef(new Animated.Value(-200)).current;
 
@@ -198,7 +198,7 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
 
                         return <MapView.Marker
                             centerOffset={{ x: -5, y: -15 }}
-                            title={marker.title + ' (' + marker.date.substr(11) + ')'}
+                            title={marker.title + ' (' + marker.date.substr(11) + ') Подтверждений - ' + marker.confirms}
                             description={marker.description}
                             key={marker.id}
                             coordinate={{
@@ -223,7 +223,7 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
                         <TouchableOpacity style={{ position: 'absolute', right: 5, top: 5 }} activeOpacity={0.5} onPress={() => hideReport()}>
                             <Image source={require('../../images/controls/close.png')} style={{ width: 30, height: 30 }} />
                         </TouchableOpacity>
-                        <ReportForm focusedMarkerToReport={focusedMarkerToReport} sendReport={sendReport} hideReport={hideReport} />
+                        <ReportForm sendMarkerConfirm ={sendMarkerConfirm} focusedMarkerToReport={focusedMarkerToReport} sendReport={sendReport} hideReport={hideReport} />
 
                     </Animated.View>
                 }
