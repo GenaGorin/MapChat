@@ -1,5 +1,5 @@
 export const activeImagesSource = [
-    require('../../images/markers/active4.png'),
+    require('../../images/markers/active.png'),
     require('../../images/markers/active2.png'),
     require('../../images/markers/active3.png'),
 ];
@@ -15,4 +15,8 @@ export const advImageSourses = [
 
 export const messageImageSourses = [
     require('../../images/markers/message.png'),
+]
+
+export const cameraImageSourses = [
+    require('../../images/markers/speedCam.png'),
 ]

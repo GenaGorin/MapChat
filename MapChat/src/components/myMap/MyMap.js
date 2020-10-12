@@ -3,14 +3,15 @@ import { StyleSheet, View, Image, TouchableOpacity, Animated } from 'react-nativ
 import MapView from 'react-native-maps';
 import StartModal from '../StartModal/StartModal';
 import FeedbackModal from '../FeedbackModal/FeedbackModal';
+import SponsorsModal from '../SponsorsModal/SponsorsModal';
 import CreateMarkerwindow from '../createMarkerWindow/CreateMarkerwindow';
-import { activeImagesSource, clearImagesSourses, advImageSourses, messageImageSourses } from '../imagesArray/imagesArray';
+import { activeImagesSource, clearImagesSourses, advImageSourses, messageImageSourses, cameraImageSourses } from '../imagesArray/imagesArray';
 import GetLocation from 'react-native-get-location';
 import { ReportForm } from './reportForm/ReportForm';
 
 export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMarkerLatitude,
     lastMarkerLongitude, updateAppMarkers, startModal, hideModal, feedbackModal, chabgeFeedbcakModal,
-    showUpdateBtn, feedbackData, sendReport, banInfo, sendMarkerConfirm }) => {
+    showUpdateBtn, feedbackData, sendReport, banInfo, sendMarkerConfirm, sponsorsModal, changeSponsorsModal, sponsorsData }) => {
 
     const fadeAnim = useRef(new Animated.Value(-200)).current;
 
@@ -140,6 +141,7 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
             <View style={styles.container}>
                 <StartModal hideModal={hideModal} startModal={startModal} />
                 <FeedbackModal feedbackModal={feedbackModal} chabgeFeedbcakModal={chabgeFeedbcakModal} feedbackData={feedbackData} />
+                <SponsorsModal sponsorsData= {sponsorsData} sponsorsModal = {sponsorsModal} changeSponsorsModal = {changeSponsorsModal} />
 
                 <View style={{ display: 'flex', flexDirection: 'column', right: 10, position: 'absolute' }}>
                     <TouchableOpacity style={styles.zoomInNew} activeOpacity={0.5} onPress={() => zoomIn()}>
@@ -159,6 +161,9 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
                         </TouchableOpacity>
                         : <View></View>}
                 </View>
+                <TouchableOpacity style={styles.sponsors} activeOpacity={0.5} onPress={() => changeSponsorsModal(true)}>
+                    <Image source={require('../../images/controls/money.png')} style={{ width: 25, height: 25 }} />
+                </TouchableOpacity>
 
                 <TouchableOpacity style={styles.advitrisment} activeOpacity={0.5} onPress={() => chabgeFeedbcakModal(true)}>
                     <Image source={require('../../images/controls/info.png')} style={{ width: 30, height: 30 }} />
@@ -194,10 +199,11 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
                         if (imageArr[0] == 'clear') source = clearImagesSourses[imageArr[1]]
                         if (imageArr[0] == 'adv') source = advImageSourses[imageArr[1]]
                         if (imageArr[0] == 'message') source = messageImageSourses[imageArr[1]]
+                        if (imageArr[0] == 'camera') source = cameraImageSourses[imageArr[1]]
 
 
                         return <MapView.Marker
-                            centerOffset={{ x: -5, y: -15 }}
+                            //centerOffset={{ x: -5, y: -5 }}
                             title={marker.title + ' (' + marker.date.substr(11) + ') Подтверждений - ' + marker.confirms}
                             description={marker.description}
                             key={marker.id}
@@ -205,7 +211,7 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
                                 latitude: parseFloat(marker.latitude),
                                 longitude: parseFloat(marker.longitude),
                             }}>
-                            <Image source={source} style={{ width: 30, height: 48 }} />
+                            <Image source={source} style={{ width: 40, height: 50 }} />
                         </MapView.Marker>
                     })}
                 </MapView>
@@ -301,5 +307,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         zIndex: 100,
         marginBottom: 10,
-    }
+    },
+    sponsors: {
+        position: 'absolute',
+        left: 10,
+        top: 30,
+        width: 40, height: 40,
+        backgroundColor: '#FFFFFF',
+        opacity: 0.8,
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 100,
+        marginBottom: 10,
+    },
 });

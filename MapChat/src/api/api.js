@@ -44,6 +44,9 @@ export const policeGramm = {
         let data = new FormData();
         data.append('markerId', markerId);
         return policeGrammApi.post('confirmMarker.php', data);
+    },
+    getSponsors() {
+        return policeGrammApi.get('getSponsors.php');
     }
     /*
     login(loginData) {

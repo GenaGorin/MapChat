@@ -15,6 +15,7 @@ export default class App extends React.Component {
     startModal: true,
     banReason: null,
     feedbackModal: false,
+    sponsorsModal: false,
     showUpdateBtn: true,
     currentPosition: {
       latitude: null,
@@ -26,6 +27,7 @@ export default class App extends React.Component {
     },
     feebackData: [],
     markers: [],
+    sponsorsData: [],
   }
   i = 4;
 
@@ -94,7 +96,7 @@ export default class App extends React.Component {
 
     if (this.state.feebackData.length == 0) {
       let self = this;
-      policeGramm.getContacts(this.state.currentPosition)
+      policeGramm.getContacts()
         .then(function (response) {
           self.setState({
             feebackData: response.data
@@ -105,6 +107,26 @@ export default class App extends React.Component {
         });
     }
 
+  }
+
+  changeSponsorsModal(bool) {
+    this.setState({
+      sponsorsModal: bool,
+    });
+
+    if (this.state.sponsorsData.length == 0) {
+      let self = this;
+      policeGramm.getSponsors()
+        .then(function (response) {
+          self.setState({
+            sponsorsData: response.data
+          })
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+    }
   }
 
   loadApp(position) {
@@ -159,6 +181,7 @@ export default class App extends React.Component {
       description: data.description,
       image: data.image,
       date: data.date,
+      confirms: 1,
     };
     var self = this;
     self.setState({
@@ -230,6 +253,9 @@ export default class App extends React.Component {
           feedbackModal={this.state.feedbackModal}
           chabgeFeedbcakModal={this.chabgeFeedbcakModal.bind(this)}
           feedbackData={this.state.feebackData}
+          sponsorsModal = {this.state.sponsorsModal}
+          changeSponsorsModal = {this.changeSponsorsModal.bind(this)}
+          sponsorsData = {this.state.sponsorsData}
           showUpdateBtn={this.state.showUpdateBtn}
           sendReport = {this.sendReport.bind(this)}
           banInfo = {this.state.banInfo}
