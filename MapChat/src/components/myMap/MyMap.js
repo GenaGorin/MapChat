@@ -141,7 +141,7 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
             <View style={styles.container}>
                 <StartModal hideModal={hideModal} startModal={startModal} />
                 <FeedbackModal feedbackModal={feedbackModal} chabgeFeedbcakModal={chabgeFeedbcakModal} feedbackData={feedbackData} />
-                <SponsorsModal sponsorsData= {sponsorsData} sponsorsModal = {sponsorsModal} changeSponsorsModal = {changeSponsorsModal} />
+                <SponsorsModal feedbackData={feedbackData} sponsorsData= {sponsorsData} sponsorsModal = {sponsorsModal} changeSponsorsModal = {changeSponsorsModal} />
 
                 <View style={{ display: 'flex', flexDirection: 'column', right: 10, position: 'absolute' }}>
                     <TouchableOpacity style={styles.zoomInNew} activeOpacity={0.5} onPress={() => zoomIn()}>
@@ -151,7 +151,7 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
                         <Image source={require('../../images/controls/minusnew.png')} style={{ width: 30, height: 30, paddingTop: 10, paddingLeft: 10 }} />
                     </TouchableOpacity>
                 </View>
-                <View style={{ display: 'flex', flexDirection: 'column', right: 10, position: 'absolute', bottom: 30 }}>
+                <View style={{ display: 'flex', flexDirection: 'column', right: 10, position: 'absolute', bottom: 45 }}>
                     <TouchableOpacity style={styles.updateNew} activeOpacity={0.5} onPress={() => getMyLocation()}>
                         <Image source={require('../../images/controls/findme2.png')} style={{ width: 30, height: 30, paddingTop: 10, paddingLeft: 10 }} />
                     </TouchableOpacity>
@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
     advitrisment: {
         position: 'absolute',
         right: 10,
-        top: 30,
+        top: 50,
         width: 40, height: 40,
         backgroundColor: '#FFFFFF',
         opacity: 0.8,
@@ -311,7 +311,7 @@ const styles = StyleSheet.create({
     sponsors: {
         position: 'absolute',
         left: 10,
-        top: 30,
+        top: 50,
         width: 40, height: 40,
         backgroundColor: '#FFFFFF',
         opacity: 0.8,

@@ -126,6 +126,16 @@ export default class App extends React.Component {
           console.log(error);
         });
 
+        policeGramm.getContacts()
+        .then(function (response) {
+          self.setState({
+            feebackData: response.data
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
     }
   }
 

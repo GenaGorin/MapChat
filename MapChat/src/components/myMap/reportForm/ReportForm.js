@@ -47,7 +47,7 @@ export const ReportForm = ({ sendReport, focusedMarkerToReport, hideReport, send
                     </View>
                     <View style={{ alignItems: 'center' }}>
                         <TouchableOpacity style={[styles.reportButton, { backgroundColor: '#F67878' }]} activeOpacity={0.5} onPress={() => createReport()}>
-                            <Image source={require('../../../images/controls/warning.png')} style={{ width: 20, height: 20, marginRight: 10 }} />
+                            <Image source={require('../../../images/controls/warning.png')} style={{ width: 23, height: 20, marginRight: 10 }} />
                             <Text>ПОЖАЛОВАТЬСЯ</Text>
                         </TouchableOpacity>
                     </View>
