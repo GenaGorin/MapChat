@@ -38,7 +38,7 @@ export default StartModal = ({ sponsorsModal, changeSponsorsModal, sponsorsData,
                                 if (i == 2) backgroundColor = { backgroundColor: '#f5f5f5' }
                                 if (i == 3) backgroundColor = { backgroundColor: '#f2dec2' }
                                 return (
-                                    <View style={[styles.singleSponsor, backgroundColor]}>
+                                    <View style={[styles.singleSponsor, backgroundColor]} key = {i}>
                                         <View style={styles.singleSponsorNumblock}>
                                             <Text>{i}</Text>
                                         </View>
