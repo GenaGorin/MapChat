@@ -1,31 +1,12 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, Button, TouchableOpacity, Modal, Linking, ActivityIndicator } from 'react-native';
 
-export default StartModal = ({ feedbackModal, chabgeFeedbcakModal, feedbackData }) => {
+export default StartModal = ({ feedbackModal, chabgeFeedbcakModal, feedbackData, clicksOnContact }) => {
 
-    const goInstagramm = () => {
-        const url = feedbackData[0].url;
-        Linking.openURL(url).catch(err => console.error('An error occurred', err));
+    const contactClick = (contactId) => {
+        clicksOnContact(contactId);
     }
-
-    const goTelegramm = () => {
-        const url = feedbackData[1].url;
-        Linking.openURL(url).catch(err => console.error('An error occurred', err));
-    }
-
-    const goDrivechat = () => {
-        const url = feedbackData[2].url;
-        Linking.openURL(url).catch(err => console.error('An error occurred', err));
-    }
-
-    const goDonate = () => {
-        const url = feedbackData[3].url;
-        Linking.openURL(url).catch(err => console.error('An error occurred', err));
-    }
-
-
-
-
+    
     return (
         <Modal visible={feedbackModal}>
             <View style={styles.header}>
@@ -41,25 +22,25 @@ export default StartModal = ({ feedbackModal, chabgeFeedbcakModal, feedbackData 
                         <View style={{ marginBottom: 30, }}>
                             <Text >Наши контакты для сотрудничества и обратной связи</Text>
                         </View>
-                        <TouchableOpacity onPress={goInstagramm} style={[styles.buttons, { backgroundColor: '#833ab4' }]}>
+                        <TouchableOpacity onPress={() => contactClick(1)} style={[styles.buttons, { backgroundColor: '#833ab4' }]}>
                             <View style={{ flexDirection: 'row' }}>
                                 <Image source={require('../../images/controls/instagramm.png')} style={{ width: 40, height: 40, marginLeft: 5 }} />
                                 <Text style={styles.buttonText}>INSTAGRAMM</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={goTelegramm} style={[styles.buttons, { backgroundColor: '#0088cc' }]}>
+                        <TouchableOpacity onPress={() => contactClick(2)} style={[styles.buttons, { backgroundColor: '#0088cc' }]}>
                             <View style={{ flexDirection: 'row' }}>
                                 <Image source={require('../../images/controls/telegramm.png')} style={{ width: 40, height: 40, marginLeft: 5 }} />
                                 <Text style={styles.buttonText}>TELEGRAMM</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={goDrivechat} style={[styles.buttons, { backgroundColor: '#FDD138' }]}>
+                        <TouchableOpacity onPress={() => contactClick(3)} style={[styles.buttons, { backgroundColor: '#FDD138' }]}>
                             <View style={{ flexDirection: 'row' }}>
                                 <Image source={require('../../images/controls/site.png')} style={{ width: 40, height: 40, marginLeft: 5 }} />
                                 <Text style={styles.buttonText}>DRIVECHAT</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={goDonate} style={[styles.buttons, { backgroundColor: '#ffcc00' }]}>
+                        <TouchableOpacity onPress={() => contactClick(4)} style={[styles.buttons, { backgroundColor: '#ffcc00' }]}>
                             <View style={{ flexDirection: 'row' }}>
                                 <Image source={require('../../images/controls/yandex.png')} style={{ width: 40, height: 40, marginLeft: 5 }} />
                                 <Text style={styles.buttonText}>DONATE</Text>

@@ -11,7 +11,7 @@ import { ReportForm } from './reportForm/ReportForm';
 
 export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMarkerLatitude,
     lastMarkerLongitude, updateAppMarkers, startModal, hideModal, feedbackModal, chabgeFeedbcakModal,
-    showUpdateBtn, feedbackData, sendReport, banInfo, sendMarkerConfirm, sponsorsModal, changeSponsorsModal, sponsorsData }) => {
+    showUpdateBtn, feedbackData, sendReport, banInfo, sendMarkerConfirm, sponsorsModal, changeSponsorsModal, sponsorsData, clicksOnContact }) => {
 
     const fadeAnim = useRef(new Animated.Value(-200)).current;
 
@@ -140,7 +140,7 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
             :
             <View style={styles.container}>
                 <StartModal hideModal={hideModal} startModal={startModal} />
-                <FeedbackModal feedbackModal={feedbackModal} chabgeFeedbcakModal={chabgeFeedbcakModal} feedbackData={feedbackData} />
+                <FeedbackModal feedbackModal={feedbackModal} chabgeFeedbcakModal={chabgeFeedbcakModal} feedbackData={feedbackData} clicksOnContact ={clicksOnContact}/>
                 <SponsorsModal feedbackData={feedbackData} sponsorsData= {sponsorsData} sponsorsModal = {sponsorsModal} changeSponsorsModal = {changeSponsorsModal} />
 
                 <View style={{ display: 'flex', flexDirection: 'column', right: 10, position: 'absolute' }}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ActivityIndicator, Alert, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, ActivityIndicator, Alert, Linking } from 'react-native';
 import MyMap from './src/components/myMap/MyMap';
 import GetLocation from 'react-native-get-location'
 import { policeGramm } from './src/api/api';
@@ -34,6 +34,19 @@ export default class App extends React.Component {
   findMarkerId = (lat, lng) => {
     let res = this.state.markers.filter((marker)=> marker.latitude == lat && marker.longitude == lng);
     return res[0].id;
+  }
+
+  clicksOnContact(contactId){
+    let self = this;
+    let index = contactId -1;
+    policeGramm.clicksOnContact(contactId)
+      .then(function (response) {
+        const url = self.state.feebackData[index].url;
+        Linking.openURL(url).catch(err => console.error('An error occurred', err));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   sendReport(reportData) {
@@ -270,6 +283,7 @@ export default class App extends React.Component {
           sendReport = {this.sendReport.bind(this)}
           banInfo = {this.state.banInfo}
           sendMarkerConfirm = {this.sendMarkerConfirm.bind(this)}
+          clicksOnContact ={this.clicksOnContact.bind(this)}
         />
     );
   }

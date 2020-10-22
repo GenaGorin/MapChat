@@ -47,6 +47,11 @@ export const policeGramm = {
     },
     getSponsors() {
         return policeGrammApi.get('getSponsors.php');
+    },
+    clicksOnContact(contactId) {
+        let data = new FormData();
+        data.append('contact_id', contactId);
+        return policeGrammApi.post('clicksOnContact.php', data);
     }
     /*
     login(loginData) {
