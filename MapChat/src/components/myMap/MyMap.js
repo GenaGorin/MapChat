@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { StyleSheet, View, Image, TouchableOpacity, Animated } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity, Animated, Text } from 'react-native';
 import MapView from 'react-native-maps';
 import StartModal from '../StartModal/StartModal';
 import FeedbackModal from '../FeedbackModal/FeedbackModal';
@@ -8,15 +8,20 @@ import CreateMarkerwindow from '../createMarkerWindow/CreateMarkerwindow';
 import { activeImagesSource, clearImagesSourses, advImageSourses, messageImageSourses, cameraImageSourses } from '../imagesArray/imagesArray';
 import GetLocation from 'react-native-get-location';
 import { ReportForm } from './reportForm/ReportForm';
+import { PresentForm } from './presentForm/PresentForm';
 
 export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMarkerLatitude,
     lastMarkerLongitude, updateAppMarkers, startModal, hideModal, feedbackModal, chabgeFeedbcakModal,
-    showUpdateBtn, feedbackData, sendReport, banInfo, sendMarkerConfirm, sponsorsModal, changeSponsorsModal, sponsorsData, clicksOnContact }) => {
+    showUpdateBtn, feedbackData, sendReport, banInfo, sendMarkerConfirm, sponsorsModal, changeSponsorsModal, 
+    sponsorsData, clicksOnContact, incrementPresentViewsAndLinking}) => {
 
     const fadeAnim = useRef(new Animated.Value(-200)).current;
 
     const showReport = (coords) => {
-        setFocusedMarkerToReport(coords);
+        let latitude = coords.latitude.toFixed(4);
+        let longitude = coords.longitude.toFixed(4);
+        let selectedMarker = markers.filter((marker)=> marker.latitude == latitude && marker.longitude == longitude);
+        setFocusedMarkerToReport(selectedMarker);
         Animated.timing(fadeAnim, {
             toValue: 0,
             duration: 300,
@@ -24,7 +29,7 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
         }).start();
     };
 
-    const [focusedMarkerToReport, setFocusedMarkerToReport] = useState('');
+    const [focusedMarkerToReport, setFocusedMarkerToReport] = useState([{}]);
 
     const hideReport = () => {
         Animated.timing(fadeAnim, {
@@ -98,20 +103,6 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
         });
     }
 
-    /*
-        const [activeImages, setActiveImages] = useState(false);
-        const [passiveImages, setPassiveImages] = useState(false);
-    
-        const showActiveImg = () => {
-            setPassiveImages(false);
-            setActiveImages(true);
-        }
-    
-        const showPassiveImg = () => {
-            setActiveImages(false);
-            setPassiveImages(true);
-        }
-    */
 
     const getMyLocation = () => {
         GetLocation.getCurrentPosition({
@@ -229,7 +220,11 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
                         <TouchableOpacity style={{ position: 'absolute', right: 5, top: 5 }} activeOpacity={0.5} onPress={() => hideReport()}>
                             <Image source={require('../../images/controls/close.png')} style={{ width: 30, height: 30 }} />
                         </TouchableOpacity>
-                        <ReportForm sendMarkerConfirm ={sendMarkerConfirm} focusedMarkerToReport={focusedMarkerToReport} sendReport={sendReport} hideReport={hideReport} />
+                        {focusedMarkerToReport[0].title == 'АКЦИЯ' ?
+                            <PresentForm focusedMarkerToReport={focusedMarkerToReport}  hideReport={hideReport} incrementPresentViewsAndLinking ={incrementPresentViewsAndLinking} />
+                        :
+                            <ReportForm sendMarkerConfirm ={sendMarkerConfirm} focusedMarkerToReport={focusedMarkerToReport} sendReport={sendReport} hideReport={hideReport} />
+                        }
 
                     </Animated.View>
                 }

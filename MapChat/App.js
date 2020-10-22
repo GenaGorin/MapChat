@@ -50,7 +50,7 @@ export default class App extends React.Component {
   }
 
   sendReport(reportData) {
-    let markerId = this.findMarkerId(reportData.latitude, reportData.longitude);
+    let markerId = reportData.markerId;
     let description = reportData.description;
     policeGramm.createReport(markerId, description)
       .then(function (response) {
@@ -79,8 +79,17 @@ export default class App extends React.Component {
       })
     }
 
-    sendMarkerConfirm(confirmData) {
-      let markerId = this.findMarkerId(confirmData.latitude, confirmData.longitude);
+    incrementPresentViewsAndLinking(markerId, url) {
+      policeGramm.incrementPresentViews(markerId)
+      .then(function (response) {
+        Linking.openURL(url).catch(err => console.error('An error occurred', err));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+
+    sendMarkerConfirm(markerId) {
       let self = this;
       policeGramm.confirmMarker(markerId)
       .then(function (response) {
@@ -88,7 +97,6 @@ export default class App extends React.Component {
           self.incrementConfirms(markerId);
         } else {
           Alert.alert('Вы уже подтверждали эту метку')
-          //console.log(response.data)
         }
       })
       .catch(function (error) {
@@ -284,6 +292,7 @@ export default class App extends React.Component {
           banInfo = {this.state.banInfo}
           sendMarkerConfirm = {this.sendMarkerConfirm.bind(this)}
           clicksOnContact ={this.clicksOnContact.bind(this)}
+          incrementPresentViewsAndLinking = {this.incrementPresentViewsAndLinking.bind(this)}
         />
     );
   }

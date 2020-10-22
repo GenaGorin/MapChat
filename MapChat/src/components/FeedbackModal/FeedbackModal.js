@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, Button, TouchableOpacity, Modal, Linking, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, TouchableOpacity, Modal, ActivityIndicator } from 'react-native';
 
 export default StartModal = ({ feedbackModal, chabgeFeedbcakModal, feedbackData, clicksOnContact }) => {
 
     const contactClick = (contactId) => {
         clicksOnContact(contactId);
     }
-    
+
     return (
         <Modal visible={feedbackModal}>
             <View style={styles.header}>

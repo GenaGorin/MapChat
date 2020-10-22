@@ -52,6 +52,11 @@ export const policeGramm = {
         let data = new FormData();
         data.append('contact_id', contactId);
         return policeGrammApi.post('clicksOnContact.php', data);
+    },
+    incrementPresentViews(markerId) {
+        let data = new FormData();
+        data.append('markerId', markerId);
+        return policeGrammApi.post('incrementPresentViews.php', data);
     }
     /*
     login(loginData) {
