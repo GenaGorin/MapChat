@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface MapChatTests : XCTestCase
+@interface DriveChatTests : XCTestCase
 
 @end
 
-@implementation MapChatTests
+@implementation DriveChatTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL(^)(UIView *view))test
 {

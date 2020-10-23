@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "MapChat.app"
-               BlueprintName = "MapChat"
-               ReferencedContainer = "container:MapChat.xcodeproj">
+               BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
+               BuildableName = "DriveChat-tvOS.app"
+               BlueprintName = "DriveChat-tvOS"
+               ReferencedContainer = "container:DriveChat.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "MapChatTests.xctest"
-               BlueprintName = "MapChatTests"
-               ReferencedContainer = "container:MapChat.xcodeproj">
+               BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
+               BuildableName = "DriveChat-tvOSTests.xctest"
+               BlueprintName = "DriveChat-tvOSTests"
+               ReferencedContainer = "container:DriveChat.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -54,10 +54,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "MapChat.app"
-            BlueprintName = "MapChat"
-            ReferencedContainer = "container:MapChat.xcodeproj">
+            BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
+            BuildableName = "DriveChat-tvOS.app"
+            BlueprintName = "DriveChat-tvOS"
+            ReferencedContainer = "container:DriveChat.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -71,10 +71,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "MapChat.app"
-            BlueprintName = "MapChat"
-            ReferencedContainer = "container:MapChat.xcodeproj">
+            BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
+            BuildableName = "DriveChat-tvOS.app"
+            BlueprintName = "DriveChat-tvOS"
+            ReferencedContainer = "container:DriveChat.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
