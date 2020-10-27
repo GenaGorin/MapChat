@@ -202,7 +202,7 @@ export default CreateMarkerwindow = ({ chabgeFeedbcakModal, createMarkerAndStopM
             }
             { (passiveImages || activeImages || messageImages)
                 &&
-                <TouchableOpacity onPress={createMarker} style={[styles.buttons, { backgroundColor: '#4fd057ba', marginTop: 70 }]} >
+                <TouchableOpacity onPress={createMarker} style={[styles.buttons, { backgroundColor: '#AEE80D', marginTop: 70 }]} >
                     <View style={{ flexDirection: 'row' }}>
                         <Image source={require('../../images/controls/accept.png')} style={{ width: 35, height: 35, marginLeft: 5 }} />
                         <Text style={styles.buttonText}>УСТАНОВИТЬ</Text>
@@ -210,7 +210,7 @@ export default CreateMarkerwindow = ({ chabgeFeedbcakModal, createMarkerAndStopM
                 </TouchableOpacity>
             }
             <View style={{ marginTop: 15 }}>
-                <TouchableOpacity onPress={stopMode} style={[styles.buttons, { backgroundColor: '#ADADAD' }]}>
+                <TouchableOpacity onPress={stopMode} style={[styles.buttons, { backgroundColor: '#626262' }]}>
                     <View style={{ flexDirection: 'row' }}>
                         <Image source={require('../../images/controls/deny.png')} style={{ width: 35, height: 35, marginLeft: 5 }} />
                         <Text style={styles.buttonText}>ОТМЕНА</Text>

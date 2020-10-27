@@ -206,8 +206,8 @@ export default class App extends React.Component {
   createNewMarker = (coords, data) => {
     let newMarker = {
       id: this.i,
-      latitude: coords.latitude,
-      longitude: coords.longitude,
+      latitude: coords.latitude.toFixed(4),
+      longitude: coords.longitude.toFixed(4),
       title: data.title,
       description: data.description,
       image: data.image,
@@ -254,13 +254,6 @@ export default class App extends React.Component {
         this.loadApp(location);
         console.warn(code, message);
       })
-    /*
-     navigator.geolocation.getCurrentPosition(
-       (position) => this.loadApp(position),
-       (err) => console.log(err),
-       { enableHighAccuracy: false, timeout: 8000, maximumAge: 10000 }
-     );
-     */
   }
 
   render() {

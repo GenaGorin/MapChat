@@ -22,22 +22,19 @@ export default StartModal = ({ feedbackModal, chabgeFeedbcakModal, feedbackData,
                         <View style={{ marginBottom: 30, }}>
                             <Text >Наши контакты для сотрудничества и обратной связи</Text>
                         </View>
-                        <TouchableOpacity onPress={() => contactClick(1)} style={[styles.buttons, { backgroundColor: '#833ab4' }]}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <Image source={require('../../images/controls/instagramm.png')} style={{ width: 40, height: 40, marginLeft: 5 }} />
-                                <Text style={styles.buttonText}>INSTAGRAMM</Text>
-                            </View>
+                        <TouchableOpacity onPress={() => contactClick(1)} >
+                        <Image source={require('../../images/controls/goInstagrammbtn.png')} style={{ width: 200, height: 50, marginBottom: 10 }} />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => contactClick(2)} style={[styles.buttons, { backgroundColor: '#0088cc' }]}>
+                        <TouchableOpacity onPress={() => contactClick(2)} style={[styles.buttons, { backgroundColor: '#33bbff' }]}>
                             <View style={{ flexDirection: 'row' }}>
                                 <Image source={require('../../images/controls/telegramm.png')} style={{ width: 40, height: 40, marginLeft: 5 }} />
-                                <Text style={styles.buttonText}>TELEGRAMM</Text>
+                                <Text style={styles.buttonText}>TELEGRAM</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => contactClick(3)} style={[styles.buttons, { backgroundColor: '#FDD138' }]}>
+                        <TouchableOpacity onPress={() => contactClick(3)} style={[styles.buttons, { backgroundColor: '#AEE80D' }]}>
                             <View style={{ flexDirection: 'row' }}>
                                 <Image source={require('../../images/controls/site.png')} style={{ width: 40, height: 40, marginLeft: 5 }} />
-                                <Text style={styles.buttonText}>DRIVECHAT</Text>
+                                <Text style={[styles.buttonText, {fontSize: 17}]}>DRIVECHAT-WEB</Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => contactClick(4)} style={[styles.buttons, { backgroundColor: '#ffcc00' }]}>

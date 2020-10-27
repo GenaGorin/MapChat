@@ -130,7 +130,7 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
             ? <CreateMarkerwindow chabgeFeedbcakModal = {chabgeFeedbcakModal} feedbackData={feedbackData} banInfo={banInfo} createMarkerAndStopMode={createMarkerAndStopMode} stopMode={stopMode} />
             :
             <View style={styles.container}>
-                <StartModal hideModal={hideModal} startModal={startModal} />
+                {startModal&& <StartModal hideModal={hideModal} startModal={startModal} />}
                 <FeedbackModal feedbackModal={feedbackModal} chabgeFeedbcakModal={chabgeFeedbcakModal} feedbackData={feedbackData} clicksOnContact ={clicksOnContact}/>
                 <SponsorsModal feedbackData={feedbackData} sponsorsData= {sponsorsData} sponsorsModal = {sponsorsModal} changeSponsorsModal = {changeSponsorsModal} />
 

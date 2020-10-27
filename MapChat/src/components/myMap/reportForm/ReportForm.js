@@ -40,7 +40,7 @@ export const ReportForm = ({ sendReport, focusedMarkerToReport, hideReport, send
                 />
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                     <View style={{ alignItems: 'center' }}>
-                        <TouchableOpacity style={[styles.reportButton, { backgroundColor: '#92EF85' }]} activeOpacity={0.5} onPress={() => confirmMarker()}>
+                        <TouchableOpacity style={[styles.reportButton, { backgroundColor: '#AEE80D' }]} activeOpacity={0.5} onPress={() => confirmMarker()}>
                             <Image source={require('../../../images/controls/accept.png')} style={{ width: 20, height: 20, marginRight: 10 }} />
                             <Text style = {{color: '#fff', fontSize: 14}}>ПОДТВЕРДИТЬ</Text>
                         </TouchableOpacity>
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     reportButton: {
-        width: 160,
+        width: 150,
         height: 45,
         //backgroundColor: '#d5d8d9',
         borderRadius: 10,

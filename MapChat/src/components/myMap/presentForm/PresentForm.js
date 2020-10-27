@@ -12,7 +12,7 @@ export const PresentForm = ({  focusedMarkerToReport, hideReport, incrementPrese
                 <Text style = {styles.description}>{focusedMarkerToReport[0].description}</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                     <View style={{ alignItems: 'center' }}>
-                        <TouchableOpacity style={[styles.reportButton, { backgroundColor: '#edec86' }]} activeOpacity={0.5} onPress={() => incrementPresentViewsAndLinking(focusedMarkerToReport[0].id, focusedMarkerToReport[0].url)}>
+                        <TouchableOpacity style={[styles.reportButton, { backgroundColor: '#AEE80D' }]} activeOpacity={0.5} onPress={() => incrementPresentViewsAndLinking(focusedMarkerToReport[0].id, focusedMarkerToReport[0].url)}>
                             <Image source={require('../../../images/controls/accept.png')} style={{ width: 20, height: 20, marginRight: 10 }} />
                             <Text style = {{color: '#fff', fontSize: 16}}>ПОДРОБНЕЕ</Text>
                         </TouchableOpacity>
