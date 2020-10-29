@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
         color: '#777777',
     },
     description: {
-        marginTop: 30,
-        marginBottom: 25,
+        marginTop: 20,
+        marginBottom: 15,
     },
     reportButton: {
         width: 200,
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 10,
+        marginTop: 5,
         flexDirection: 'row'
     }
 });

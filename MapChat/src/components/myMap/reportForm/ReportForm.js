@@ -42,13 +42,13 @@ export const ReportForm = ({ sendReport, focusedMarkerToReport, hideReport, send
                     <View style={{ alignItems: 'center' }}>
                         <TouchableOpacity style={[styles.reportButton, { backgroundColor: '#AEE80D' }]} activeOpacity={0.5} onPress={() => confirmMarker()}>
                             <Image source={require('../../../images/controls/accept.png')} style={{ width: 20, height: 20, marginRight: 10 }} />
-                            <Text style = {{color: '#fff', fontSize: 14}}>ПОДТВЕРДИТЬ</Text>
+                            <Text style = {{color: '#fff', fontSize: 12}}>ПОДТВЕРДИТЬ</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{ alignItems: 'center' }}>
                         <TouchableOpacity style={[styles.reportButton, { backgroundColor: '#F67878' }]} activeOpacity={0.5} onPress={() => createReport()}>
                             <Image source={require('../../../images/controls/warning.png')} style={{ width: 23, height: 20, marginRight: 10 }} />
-                            <Text style = {{color: '#fff', fontSize: 14}}>ПОЖАЛОВАТЬСЯ</Text>
+                            <Text style = {{color: '#fff', fontSize: 12}}>ПОЖАЛОВАТЬСЯ</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
