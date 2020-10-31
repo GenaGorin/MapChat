@@ -5,10 +5,15 @@ import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures'
 export default ImageMarker = ({ source, changeImageToLeft, changeImageToRight, withArrows }) => {
 
     if (withArrows) {
+        const config = {
+            directionalOffsetThreshold: 1000,
+            velocityThreshold: 0.3,
+        };
         return (
             <GestureRecognizer
                 onSwipeLeft={changeImageToRight}
                 onSwipeRight={changeImageToLeft}
+                config={config}
                 style={{ flexDirection: 'row', justifyContent: 'space-around'}}
             >
                 <TouchableOpacity style={styles.arrows} onPress={changeImageToLeft}>

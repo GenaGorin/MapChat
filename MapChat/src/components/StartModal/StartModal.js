@@ -32,9 +32,8 @@ export default StartModal = ({ startModal, hideModal }) => {
     }
 
     const config = {
-        horizontal: true,
-        directionalOffsetThreshold: 50,
-        velocityThreshold: 0.7
+        directionalOffsetThreshold: 1000,
+        velocityThreshold: 0.3,
     };
 
     return (
