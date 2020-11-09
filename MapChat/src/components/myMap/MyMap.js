@@ -12,15 +12,15 @@ import { PresentForm } from './presentForm/PresentForm';
 
 export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMarkerLatitude,
     lastMarkerLongitude, updateAppMarkers, startModal, hideModal, feedbackModal, chabgeFeedbcakModal,
-    showUpdateBtn, feedbackData, sendReport, banInfo, sendMarkerConfirm, sponsorsModal, changeSponsorsModal, 
-    sponsorsData, clicksOnContact, incrementPresentViewsAndLinking}) => {
+    showUpdateBtn, feedbackData, sendReport, banInfo, sendMarkerConfirm, sponsorsModal, changeSponsorsModal,
+    sponsorsData, clicksOnContact, incrementPresentViewsAndLinking, withCameras, changeCamerasVisible }) => {
 
     const fadeAnim = useRef(new Animated.Value(-200)).current;
 
     const showReport = (coords) => {
         let latitude = coords.latitude.toFixed(4);
         let longitude = coords.longitude.toFixed(4);
-        let selectedMarker = markers.filter((marker)=> marker.latitude == latitude && marker.longitude == longitude);
+        let selectedMarker = markers.filter((marker) => marker.latitude == latitude && marker.longitude == longitude);
         setFocusedMarkerToReport(selectedMarker);
         Animated.timing(fadeAnim, {
             toValue: 0,
@@ -127,12 +127,12 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
 
     return (
         createMarkerMode.createMode
-            ? <CreateMarkerwindow chabgeFeedbcakModal = {chabgeFeedbcakModal} feedbackData={feedbackData} banInfo={banInfo} createMarkerAndStopMode={createMarkerAndStopMode} stopMode={stopMode} />
+            ? <CreateMarkerwindow chabgeFeedbcakModal={chabgeFeedbcakModal} feedbackData={feedbackData} banInfo={banInfo} createMarkerAndStopMode={createMarkerAndStopMode} stopMode={stopMode} />
             :
             <View style={styles.container}>
-                {startModal&& <StartModal hideModal={hideModal} startModal={startModal} />}
-                <FeedbackModal feedbackModal={feedbackModal} chabgeFeedbcakModal={chabgeFeedbcakModal} feedbackData={feedbackData} clicksOnContact ={clicksOnContact}/>
-                <SponsorsModal feedbackData={feedbackData} sponsorsData= {sponsorsData} sponsorsModal = {sponsorsModal} changeSponsorsModal = {changeSponsorsModal} />
+                {startModal && <StartModal hideModal={hideModal} startModal={startModal} />}
+                <FeedbackModal feedbackModal={feedbackModal} chabgeFeedbcakModal={chabgeFeedbcakModal} feedbackData={feedbackData} clicksOnContact={clicksOnContact} />
+                <SponsorsModal feedbackData={feedbackData} sponsorsData={sponsorsData} sponsorsModal={sponsorsModal} changeSponsorsModal={changeSponsorsModal} />
 
                 <View style={{ display: 'flex', flexDirection: 'column', right: 10, position: 'absolute' }}>
                     <TouchableOpacity style={styles.zoomInNew} activeOpacity={0.5} onPress={() => zoomIn()}>
@@ -143,6 +143,9 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
                     </TouchableOpacity>
                 </View>
                 <View style={{ display: 'flex', flexDirection: 'column', right: 10, position: 'absolute', bottom: 45 }}>
+                    <TouchableOpacity style={withCameras ? styles.updateNew: [styles.updateNew, {opacity: 0.5}]} activeOpacity={0.5} onPress={() => changeCamerasVisible()}>
+                        <Image source={require('../../images/controls/camera.png')} style={{ width: 20, height: 20, paddingTop: 10, paddingLeft: 10 }} />
+                    </TouchableOpacity>
                     <TouchableOpacity style={styles.updateNew} activeOpacity={0.5} onPress={() => getMyLocation()}>
                         <Image source={require('../../images/controls/findme2.png')} style={{ width: 30, height: 30, paddingTop: 10, paddingLeft: 10 }} />
                     </TouchableOpacity>
@@ -221,9 +224,9 @@ export default MyMap = ({ latitude, longitude, markers, createNewMarker, lastMar
                             <Image source={require('../../images/controls/close.png')} style={{ width: 30, height: 30 }} />
                         </TouchableOpacity>
                         {focusedMarkerToReport[0].title == 'АКЦИЯ' ?
-                            <PresentForm focusedMarkerToReport={focusedMarkerToReport}  hideReport={hideReport} incrementPresentViewsAndLinking ={incrementPresentViewsAndLinking} />
-                        :
-                            <ReportForm sendMarkerConfirm ={sendMarkerConfirm} focusedMarkerToReport={focusedMarkerToReport} sendReport={sendReport} hideReport={hideReport} />
+                            <PresentForm focusedMarkerToReport={focusedMarkerToReport} hideReport={hideReport} incrementPresentViewsAndLinking={incrementPresentViewsAndLinking} />
+                            :
+                            <ReportForm sendMarkerConfirm={sendMarkerConfirm} focusedMarkerToReport={focusedMarkerToReport} sendReport={sendReport} hideReport={hideReport} />
                         }
 
                     </Animated.View>
