@@ -3,10 +3,12 @@ import { StyleSheet, ActivityIndicator, Alert, Linking } from 'react-native';
 import MyMap from './src/components/myMap/MyMap';
 import GetLocation from 'react-native-get-location'
 import { policeGramm } from './src/api/api';
+import { getUniqueId, getManufacturer } from 'react-native-device-info';
 
 export default class App extends React.Component {
 
   state = {
+    deviceId: null,
     isLoaded: false,
     banInfo: {
       banStatus: false,
@@ -55,8 +57,9 @@ export default class App extends React.Component {
 
   sendReport(reportData) {
     let markerId = reportData.markerId;
+    let deviceId = this.state.deviceId;
     let description = reportData.description;
-    policeGramm.createReport(markerId, description)
+    policeGramm.createReport(markerId, description, deviceId)
       .then(function (response) {
         if (response.data === 'success') {
           Alert.alert('Ваша жалоба будет рассмотрена')
@@ -94,8 +97,9 @@ export default class App extends React.Component {
   }
 
   sendMarkerConfirm(markerId) {
+    let deviceId = this.state.deviceId;
     let self = this;
-    policeGramm.confirmMarker(markerId)
+    policeGramm.confirmMarker(markerId, deviceId)
       .then(function (response) {
         if (response.data === 'Success') {
           self.incrementConfirms(markerId);
@@ -164,8 +168,9 @@ export default class App extends React.Component {
     }
   }
 
-  loadApp(position) {
+  loadApp(position, deviceId) {
     this.setState({
+      deviceId: deviceId,
       isLoaded: true,
       currentPosition: {
         latitude: position.latitude,
@@ -174,7 +179,7 @@ export default class App extends React.Component {
     });
 
     var self = this;
-    policeGramm.getMarkers(this.state.currentPosition)
+    policeGramm.getMarkers(this.state.currentPosition, deviceId)
       .then(function (response) {
         self.setState({
           markers: response.data.markerData,
@@ -195,15 +200,20 @@ export default class App extends React.Component {
   }
 
   updateAppMarkers() {
+    let deviceId = this.state.deviceId;
     var self = this;
     self.setState({
       showUpdateBtn: false
     });
-    policeGramm.getMarkers(this.state.currentPosition)
+    policeGramm.getMarkers(this.state.currentPosition, deviceId)
       .then(function (response) {
         self.setState({
           showUpdateBtn: true,
           markers: response.data.markerData,
+          banInfo: {
+            banStatus: response.data.banInfo.status,
+            banReason: response.data.banInfo.reason,
+          },
           showedMarkers: {
             markers: response.data.markerData,
             withCameras: true,
@@ -225,6 +235,7 @@ export default class App extends React.Component {
       image: data.image,
       date: data.date,
       confirms: 1,
+      deviceId: this.state.deviceId,
     };
     var self = this;
     self.setState({
@@ -278,7 +289,8 @@ export default class App extends React.Component {
       timeout: 15000,
     })
       .then(location => {
-        this.loadApp(location);
+        let uniqueId = getUniqueId();
+        this.loadApp(location, uniqueId);
       })
       .catch(error => {
         const { code, message } = error;
@@ -286,7 +298,8 @@ export default class App extends React.Component {
         let location = {};
         location.latitude = 51.506737;
         location.longitude = 45.956049;
-        this.loadApp(location);
+        let uniqueId = getUniqueId();
+        this.loadApp(location, uniqueId);
         console.warn(code, message);
       })
   }

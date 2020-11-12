@@ -17,10 +17,10 @@ const policeGrammApi = axios.create({
 
 
 export const policeGramm = {
-    getMarkers(position) {
+    getMarkers(position, deviceId) {
         let latitude = position.latitude;
         let longitude = position.longitude;
-        return policeGrammApi.get('getMarkers.php?latitude='+latitude+'&longitude='+longitude);
+        return policeGrammApi.get('getMarkers.php?latitude='+latitude+'&longitude='+longitude+'&deviceId='+deviceId);
     },
     createMarker(marker) {
         let data = new FormData();
@@ -29,20 +29,23 @@ export const policeGramm = {
         data.append('title', marker.title);
         data.append('description', marker.description);
         data.append('image', marker.image);
+        data.append('deviceId', marker.deviceId);
         return policeGrammApi.post('createMarker.php', data);
     },
     getContacts() {
         return policeGrammApi.get('getContacts.php');
     },
-    createReport(markerId, description) {
+    createReport(markerId, description, deviceId) {
         let data = new FormData();
         data.append('markerId', markerId);
         data.append('description', description);
+        data.append('deviceId', deviceId);
         return policeGrammApi.post('createReport.php', data);
     },
-    confirmMarker(markerId) {
+    confirmMarker(markerId, deviceId) {
         let data = new FormData();
         data.append('markerId', markerId);
+        data.append('deviceId', deviceId);
         return policeGrammApi.post('confirmMarker.php', data);
     },
     getSponsors() {
